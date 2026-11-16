@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0a0a0a" />
+  <title>Astronaut</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="rafe2.css">
+</head>
+<body>
+<div class="all">
+
+  <!-- ================= LOGIN ================= -->
+  <div class="screen active" id="screen-login">
+    <div class="page-content">
+      <div class="logo-wrapper"><img src="imagelogonasa/logo-nasa.png" alt="Astronaut Logo"></div>
+      <h1 class="title">Welcome</h1>
+      <p class="subtitle">Sign in to track your health, monitor your wellness, and stay space-ready.</p>
+      <form id="form-login" onsubmit="handleLogin(event)">
+        <div class="form-group"><label>Email address <span class="required">*</span></label><div class="input-wrapper"><input type="email" id="login-email" placeholder="example@gmail.com" required autocomplete="email"></div></div>
+        <div class="form-group"><label>Password <span class="required">*</span></label><div class="input-wrapper"><input type="password" id="login-password" placeholder="@Sn123hsn#" required autocomplete="current-password" ><button type="button" class="toggle-password" onclick="togglePassword('login-password', this)" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+        <div class="options-row">
+          <label class="remember-me"><input type="checkbox" id="remember-me"><span>Remember me</span></label>
+          <a href="#" class="forgot-link" onclick="showScreen('forgot'); return false;">Forgot Password?</a>
+        </div>
+        <button type="submit" class="btn-primary" id="btn-login">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M13 12H3"/></svg>
+          Sign in
+        </button>
+      </form>
+      <div class="footer-link">Don't have an account? <a href="#" onclick="showScreen('register'); return false;">Sign up</a></div>
+    </div>
+  </div>
+
+  <!-- ================= REGISTER ================= -->
+  <div class="screen" id="screen-register">
+    <div class="nav-header"><button class="back-button" aria-label="Back" onclick="showScreen('login')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+    <div class="page-content">
+      <div class="logo-wrapper"><img src="imagelogonasa/logo-nasa.png" alt="Astronaut Logo"></div>
+      <h1 class="title">Create Your Account</h1>
+      <p class="subtitle">Create an account to access smart, personalized health monitoring designed for astronauts.</p>
+
+      <form id="form-register" onsubmit="handleRegister(event)">
+        <div class="form-group"><label>First Name <span class="required">*</span></label><div class="input-wrapper"><input type="text" id="reg-name" placeholder="Alex" required autocomplete="given-name"></div></div>
+        <div class="form-group"><label>Last Name <span class="required">*</span></label><div class="input-wrapper"><input type="text" id="reg-last-name" placeholder="Sander" required autocomplete="family-name"></div></div>
+        <div class="form-group"><label>Date of Birth <span class="required">*</span></label><div class="input-wrapper"><input type="date" id="reg-dob" required autocomplete="bday"></div></div>
+
+        <!-- น้ำหนัก + ส่วนสูง อยู่แถวเดียวกัน ขนาดพอดี -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="reg-weight">Weight <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <input type="number" id="reg-weight" placeholder="70" min="30" max="250" step="0.1" inputmode="decimal" required autocomplete="off">
+              <span class="unit">kg</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reg-height">Height <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <input type="number" id="reg-height" placeholder="175" min="100" max="250" step="0.1" inputmode="decimal" required autocomplete="off">
+              <span class="unit">cm</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group"><label>Email address <span class="required">*</span></label><div class="input-wrapper"><input type="email" id="reg-email" placeholder="example@gmail.com" required autocomplete="email"></div></div>
+        <div class="form-group"><label>Password <span class="required">*</span></label><div class="input-wrapper"><input type="password" id="reg-password" placeholder="B00kw0rm@2026!" required autocomplete="new-password" minlength="8"><button type="button" class="toggle-password" onclick="togglePassword('reg-password', this)" aria-label="Show password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
+
+        <!-- โรคประจำตัว -->
+        <div class="conditions-group">
+          <label>Medical conditions</label>
+          <p class="conditions-hint">Select any pre-existing conditions that are permitted for astronaut candidates. Choose "None" if you have none.</p>
+          <div class="chip-list" id="conditions-list"><label class="chip"><input type="checkbox" id="cond-none" checked><span>None</span></label><label class="chip"><input type="checkbox" name="conditions" value="hypertension_controlled"><span>Mild hypertension (controlled)</span></label><label class="chip"><input type="checkbox" name="conditions" value="asthma_mild"><span>Mild asthma (controlled)</span></label><label class="chip"><input type="checkbox" name="conditions" value="diabetes_diet"><span>Type 2 diabetes (diet-controlled)</span></label><label class="chip"><input type="checkbox" name="conditions" value="hypothyroid"><span>Hypothyroidism (stable)</span></label><label class="chip"><input type="checkbox" name="conditions" value="hyperlipidemia"><span>High cholesterol (controlled)</span></label><label class="chip"><input type="checkbox" name="conditions" value="migraine_controlled"><span>Migraine (controlled)</span></label><label class="chip"><input type="checkbox" name="conditions" value="allergy_seasonal"><span>Seasonal allergies</span></label><label class="chip"><input type="checkbox" name="conditions" value="vision_corrected"><span>Vision correction (glasses / LASIK)</span></label><label class="chip"><input type="checkbox" name="conditions" value="other"><span>Other</span></label></div>
+          <div id="cond-other-wrap"><input type="text" id="cond-other" maxlength="255" placeholder="Please specify"></div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btn-register">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6"/><path d="M23 11h-6"/></svg>
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= FORGOT ================= -->
+  <div class="screen" id="screen-forgot">
+    <div class="nav-header"><button class="back-button" aria-label="Back" onclick="showScreen('login')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+    <div class="page-content">
+      <div class="logo-wrapper"><img src="imagelogonasa/logo-nasa.png" alt="Astronaut Logo"></div>
+      <h1 class="title">Forgot Password?</h1>
+      <p class="subtitle">Enter your email and we'll send a 6-digit verification code instantly.</p>
+      <form id="form-forgot" onsubmit="handleForgot(event)">
+        <div class="form-group"><label>Email address <span class="required">*</span></label><div class="input-wrapper"><input type="email" id="forgot-email" placeholder="example@gmail.com" required autocomplete="email"></div></div>
+        <button type="submit" class="btn-primary" id="btn-forgot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          Send Code
+        </button>
+      </form>
+      <div class="forgot-success" id="forgot-success">
+        <div class="check-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h3>Code Sent!</h3>
+        <p>We've sent a 6-digit verification code to your email. Please check your inbox.</p>
+        <button type="button" class="btn-primary" onclick="showScreen('reset')">Enter Code &amp; Reset Password</button>
+      </div>
+      <div class="footer-link">Already have an account? <a href="#" onclick="showScreen('login'); return false;">Sign In</a></div>
+    </div>
+  </div>
+
+  <!-- ================= RESET ================= -->
+  <div class="screen" id="screen-reset">
+    <div class="nav-header"><button class="back-button" aria-label="Back" onclick="showScreen('forgot')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+    <div class="page-content">
+      <div class="logo-wrapper"><img src="imagelogonasa/logo-nasa.png" alt="Astronaut Logo"></div>
+      <h1 class="title">Reset Password</h1>
+      <p class="subtitle">Enter the verification code from your email and choose a new password.</p>
+      <form id="form-reset">
+        <div class="form-group"><label>Email address <span class="required">*</span></label><div class="input-wrapper"><input type="email" id="reset-email" placeholder="example@gmail.com" required autocomplete="email"></div></div>
+        <div class="form-group"><label>6-digit code <span class="required">*</span></label><div class="input-wrapper"><input type="text" id="reset-code" inputmode="numeric" pattern="[0-9]{{6}}" maxlength="6" placeholder="123456" required></div></div>
+        <div class="form-group"><label>New password <span class="required">*</span></label><div class="input-wrapper"><input type="password" id="reset-password" minlength="8" placeholder="New password" required autocomplete="new-password"></div></div>
+        <button type="submit" class="btn-primary">Reset Password</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= HOME ================= -->
+  <div class="screen" id="screen-home">
+    <div class="nav-header"><button class="back-button" aria-label="Back" onclick="logout()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button></div>
+    <div class="home-content">
+      <div class="home-avatar" id="home-avatar">A</div>
+      <h2 id="home-greeting">Welcome!</h2>
+      <p id="home-email">user@email.com</p>
+      <p class="home-description">You're signed in. Your smart travel plans are ready.</p>
+      <button class="btn-logout" onclick="logout()">Sign out</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ---------- SCREEN ---------- */
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('screen-' + name);
+  if (target) target.classList.add('active');
+  window.scrollTo(0, 0);
+
+  const f = document.getElementById('form-forgot'), s = document.getElementById('forgot-success');
+  if (f && s && name !== 'forgot') { f.style.display = ''; s.classList.remove('show'); }
+}
+
+/* ---------- TOAST ---------- */
+function showToast(msg, type = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show ' + type;
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ---------- PASSWORD SHOW / HIDE ---------- */
+const EYE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+const EYE_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19"/><path d="M14.12 14.12a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+function togglePassword(id, btn) {
+  const input = document.getElementById(id);
+  const show = input.type === 'password';
+  input.type = show ? 'text' : 'password';
+  btn.innerHTML = show ? EYE_OFF : EYE;
+}
+
+/* ---------- API ---------- */
+async function api(path, options = {}) {
+  const res = await fetch('/api' + path, {
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json', ...(options.headers || {}) },
+    ...options
+  });
+  let data = {};
+  try { data = await res.json(); } catch (_) {}
+  if (!res.ok) throw new Error(data.message || 'Something went wrong.');
+  return data;
+}
+
+function setLoading(btn, text, original) {
+  btn.disabled = true;
+  btn.innerHTML = `<div class="spinner"></div>${text}`;
+  return () => { btn.disabled = false; btn.innerHTML = original; };
+}
+
+/* ---------- HOME ---------- */
+/* ล็อกอิน/สมัครสำเร็จ -> ไปหน้าแดชบอร์ด */
+function goHome(user) {
+  window.location.href = '/dashboard';
+}
+
+/* ---------- MEDICAL CONDITIONS UI ---------- */
+const condNone = document.getElementById('cond-none');
+const condBoxes = [...document.querySelectorAll('input[name="conditions"]')];
+const otherWrap = document.getElementById('cond-other-wrap');
+
+function syncOther() {
+  const other = condBoxes.find(b => b.value === 'other');
+  otherWrap.classList.toggle('show', other.checked);
+}
+condNone.addEventListener('change', () => {
+  if (condNone.checked) { condBoxes.forEach(b => b.checked = false); syncOther(); }
+  else if (!condBoxes.some(b => b.checked)) condNone.checked = true;  // ต้องเลือกอย่างน้อย 1
+});
+condBoxes.forEach(b => b.addEventListener('change', () => {
+  if (b.checked) condNone.checked = false;
+  else if (!condBoxes.some(x => x.checked)) condNone.checked = true;
+  syncOther();
+}));
+
+/* ---------- LOGIN ---------- */
+async function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value;
+  const remember = document.getElementById('remember-me').checked;
+  const btn = document.getElementById('btn-login');
+  const restore = setLoading(btn, 'Signing in...', btn.innerHTML);
+  try {
+    const r = await api('/auth/login', { method: 'POST', body: JSON.stringify({ email, password, remember }) });
+    showToast('Welcome back!', 'success');
+    goHome(r.user);
+  } catch (err) { showToast(err.message, 'error'); }
+  finally { restore(); }
+}
+
+/* ---------- REGISTER ---------- */
+async function handleRegister(e) {
+  e.preventDefault();
+  const v = id => document.getElementById(id).value.trim();
+  const password = document.getElementById('reg-password').value;
+
+  if (password.length < 8) return showToast('Password must be at least 8 characters.', 'error');
+
+  const weight = parseFloat(v('reg-weight')), height = parseFloat(v('reg-height'));
+  if (!(weight >= 30 && weight <= 250)) return showToast('Weight must be between 30 and 250 kg.', 'error');
+  if (!(height >= 100 && height <= 250)) return showToast('Height must be between 100 and 250 cm.', 'error');
+
+  const dob = v('reg-dob');
+  if (new Date(dob) > new Date()) return showToast('Date of birth cannot be in the future.', 'error');
+
+  const conditions = condBoxes.filter(b => b.checked).map(b => b.value);
+  const conditionOther = conditions.includes('other') ? v('cond-other') : '';
+  if (conditions.includes('other') && !conditionOther)
+    return showToast('Please specify your other condition.', 'error');
+
+  const btn = document.getElementById('btn-register');
+  const restore = setLoading(btn, 'Creating...', btn.innerHTML);
+  try {
+    const r = await api('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({
+        firstName: v('reg-name'), lastName: v('reg-last-name'), dob, weight, height,
+        email: v('reg-email').toLowerCase(), password, conditions, conditionOther
+      })
+    });
+    showToast('Account created successfully!', 'success');
+    goHome(r.user);
+    document.getElementById('form-register').reset();
+    condNone.checked = true; syncOther();
+  } catch (err) { showToast(err.message, 'error'); }
+  finally { restore(); }
+}
+
+/* ---------- FORGOT ---------- */
+async function handleForgot(e) {
+  e.preventDefault();
+  const email = document.getElementById('forgot-email').value.trim().toLowerCase();
+  const btn = document.getElementById('btn-forgot');
+  const restore = setLoading(btn, 'Sending...', btn.innerHTML);
+  try {
+    await api('/auth/forgot-password', { method: 'POST', body: JSON.stringify({ email }) });
+    document.getElementById('form-forgot').style.display = 'none';
+    document.getElementById('forgot-success').classList.add('show');
+    document.getElementById('reset-email').value = email;
+    showToast('Verification code sent. Check your email.', 'success');
+  } catch (err) { showToast(err.message, 'error'); }
+  finally { restore(); }
+}
+
+/* ---------- RESET ---------- */
+document.getElementById('form-reset').addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = document.getElementById('reset-email').value.trim().toLowerCase();
+  const code = document.getElementById('reset-code').value.trim();
+  const password = document.getElementById('reset-password').value;
+  if (code.length !== 6) return showToast('Please enter the 6-digit code.', 'error');
+  if (password.length < 8) return showToast('Password must be at least 8 characters.', 'error');
+  try {
+    await api('/auth/reset-password', { method: 'POST', body: JSON.stringify({ email, code, password }) });
+    showToast('Password changed successfully. Please sign in.', 'success');
+    document.getElementById('form-reset').reset();
+    showScreen('login');
+  } catch (err) { showToast(err.message, 'error'); }
+});
+
+/* ---------- LOGOUT ---------- */
+async function logout() {
+  try { await api('/auth/logout', { method: 'POST' }); } catch (_) {}
+  showScreen('login');
+  document.getElementById('form-login').reset();
+  showToast('Signed out successfully', 'success');
+}
+
+/* ---------- RESTORE SESSION ---------- */
+async function restoreSession() {
+  try {
+    const r = await api('/auth/me');
+    if (r.user) goHome(r.user);
+  } catch (_) { showScreen('login'); }
+}
+restoreSession();
+</script>
+</body>
+</html>
